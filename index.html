@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Pacific Rim Bistro – Pan-Asian cuisine, sushi, and cocktails in Downtown Atlanta. 303 Peachtree Center Ave NE.">
+<title>Pacific Rim Bistro | Downtown Atlanta</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Lato:ital,wght@0,300;0,400;1,300&family=Noto+Serif:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:     #0f0e0c;
+  --deep:    #1a1714;
+  --panel:   #222019;
+  --border:  rgba(210,170,90,0.18);
+  --gold:    #d2aa5a;
+  --gold2:   #e8c87a;
+  --red:     #c0392b;
+  --ivory:   #f5f0e6;
+  --muted:   rgba(245,240,230,0.55);
+  --dim:     rgba(245,240,230,0.32);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--ink);color:var(--ivory);font-family:'Lato',sans-serif;font-weight:300;overflow-x:hidden;}
+
+/* ─── NAV ─── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.4rem 5vw;
+  transition:background .5s,padding .4s;
+}
+nav.stuck{background:rgba(15,14,12,.95);backdrop-filter:blur(14px);padding:1rem 5vw;border-bottom:1px solid var(--border);}
+.nav-logo{display:flex;flex-direction:column;align-items:flex-start;text-decoration:none;}
+.nav-logo span:first-child{font-family:'Cinzel',serif;font-size:1.15rem;letter-spacing:.18em;color:var(--gold);line-height:1;}
+.nav-logo span:last-child{font-size:.6rem;letter-spacing:.35em;text-transform:uppercase;color:var(--dim);margin-top:.15rem;}
+.nav-links{display:flex;gap:2.2rem;list-style:none;}
+.nav-links a{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s;}
+.nav-links a:hover{color:var(--gold);}
+.nav-res{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;padding:.55rem 1.5rem;border:1px solid var(--gold);color:var(--gold);text-decoration:none;transition:background .3s,color .3s;}
+.nav-res:hover{background:var(--gold);color:var(--ink);}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;}
+.hamburger span{width:24px;height:1.5px;background:var(--gold);display:block;transition:.3s;}
+
+/* ─── HERO ─── */
+.hero{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+  background:linear-gradient(160deg,#1c1508 0%,#0f0e0c 60%);
+}
+/* Subtle wave pattern */
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(ellipse 80% 60% at 70% 40%, rgba(180,120,30,.12) 0%, transparent 70%);
+}
+/* Brush-stroke SVG accent */
+.hero-accent{
+  position:absolute;right:-60px;top:50%;transform:translateY(-50%);
+  width:500px;height:500px;opacity:.07;
+}
+.hero-content{position:relative;z-index:2;text-align:center;padding:2rem;}
+.hero-tag{font-size:.65rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:1.8rem;opacity:0;animation:up .8s ease forwards .3s;}
+.hero-title{
+  font-family:'Cinzel',serif;
+  font-size:clamp(2.8rem,9vw,7.5rem);
+  font-weight:400;letter-spacing:.08em;line-height:1;
+  color:var(--ivory);
+  opacity:0;animation:up .9s ease forwards .6s;
+}
+.hero-title span{color:var(--gold);}
+.hero-sub{
+  font-family:'Noto Serif',serif;font-style:italic;font-weight:300;
+  font-size:clamp(.95rem,2.2vw,1.25rem);
+  color:var(--muted);letter-spacing:.06em;
+  margin-top:1.2rem;
+  opacity:0;animation:up .8s ease forwards 1s;
+}
+.hero-rule{
+  width:80px;height:1px;
+  background:linear-gradient(to right,transparent,var(--gold),transparent);
+  margin:2rem auto;
+  opacity:0;animation:up .8s ease forwards 1.2s;
+}
+.hero-btns{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;opacity:0;animation:up .8s ease forwards 1.5s;}
+.btn-primary{background:var(--gold);color:var(--ink);padding:.85rem 2.4rem;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;font-weight:400;text-decoration:none;transition:background .3s,transform .2s;display:inline-block;}
+.btn-primary:hover{background:var(--gold2);transform:translateY(-2px);}
+.btn-sec{background:transparent;color:var(--ivory);padding:.85rem 2.4rem;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;font-weight:300;text-decoration:none;border:1px solid rgba(245,240,230,.25);transition:border-color .3s,color .3s;display:inline-block;}
+.btn-sec:hover{border-color:var(--gold);color:var(--gold);}
+.hero-scroll-hint{
+  position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:.6rem;
+  opacity:0;animation:up .8s ease forwards 2.1s;
+}
+.hero-scroll-hint span{font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:var(--dim);}
+.scroll-bar{width:1px;height:44px;background:linear-gradient(to bottom,var(--gold),transparent);animation:pulse 2s ease infinite;}
+
+/* ─── SECTION SHARED ─── */
+.sec{padding:7rem 5vw;}
+.sec-label{font-size:.62rem;letter-spacing:.38em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:1.2rem;}
+.sec-title{font-family:'Cinzel',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:400;color:var(--ivory);line-height:1.2;}
+.sec-title em{font-style:italic;font-family:'Noto Serif',serif;color:var(--gold);}
+.sec-rule{width:40px;height:1px;background:var(--gold);margin:1.8rem 0;}
+
+/* ─── ABOUT ─── */
+.about{display:grid;grid-template-columns:1fr 1.5fr;gap:7vw;align-items:center;border-top:1px solid var(--border);}
+.about-visual{position:relative;}
+.about-box{
+  width:100%;aspect-ratio:4/5;
+  background:linear-gradient(145deg,var(--panel),var(--deep));
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.about-box::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 30%,rgba(210,170,90,.08),transparent 65%);}
+.about-svg{width:70%;height:70%;opacity:.2;}
+.about-badge{
+  position:absolute;bottom:-16px;right:-16px;
+  width:110px;height:110px;background:var(--gold);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  color:var(--ink);
+}
+.about-badge strong{font-family:'Cinzel',serif;font-size:1.8rem;line-height:1;}
+.about-badge small{font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;font-weight:400;margin-top:.2rem;}
+.about-text p{font-family:'Noto Serif',serif;font-size:.95rem;line-height:1.95;font-weight:300;color:var(--muted);margin-bottom:1.2rem;}
+.about-stats{display:flex;gap:3rem;margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--border);}
+.stat strong{font-family:'Cinzel',serif;font-size:2rem;color:var(--gold);display:block;line-height:1;}
+.stat small{font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);}
+
+/* ─── MENU ─── */
+.menu-sec{background:var(--deep);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.menu-header{text-align:center;margin-bottom:4rem;}
+.menu-tabs{display:flex;justify-content:center;flex-wrap:wrap;gap:0;margin-bottom:3.5rem;border-bottom:1px solid var(--border);}
+.mtab{
+  background:none;border:none;cursor:pointer;
+  padding:.75rem 1.8rem;
+  font-size:.67rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--dim);font-family:'Lato',sans-serif;font-weight:300;
+  position:relative;transition:color .3s;
+}
+.mtab::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform .35s;}
+.mtab.on{color:var(--gold);}
+.mtab.on::after{transform:scaleX(1);}
+.menu-pane{display:none;}
+.menu-pane.on{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;background:var(--border);}
+.dish{background:var(--ink);padding:1.8rem 2rem;transition:background .35s;position:relative;}
+.dish:hover{background:rgba(210,170,90,.04);}
+.dish-name{font-size:1rem;font-weight:400;color:var(--ivory);margin-bottom:.35rem;display:flex;justify-content:space-between;align-items:baseline;gap:.8rem;}
+.dish-price{font-family:'Noto Serif',serif;font-style:italic;color:var(--gold);font-size:.92rem;white-space:nowrap;flex-shrink:0;}
+.dish-desc{font-size:.78rem;line-height:1.7;color:var(--dim);}
+.dish-tag{
+  display:inline-block;font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;
+  background:rgba(192,57,43,.25);color:#e07060;border:1px solid rgba(192,57,43,.3);
+  padding:.15rem .5rem;margin-bottom:.5rem;
+}
+
+/* ─── HAPPY HOUR ─── */
+.happy{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border-top:1px solid var(--border);}
+.happy-block{background:var(--ink);padding:4rem 5vw;}
+.happy-block h3{font-family:'Cinzel',serif;font-size:1.5rem;color:var(--ivory);margin-bottom:1.5rem;}
+.happy-block p{font-size:.9rem;line-height:1.85;color:var(--muted);}
+.happy-block ul{list-style:none;display:flex;flex-direction:column;gap:.7rem;margin-top:1rem;}
+.happy-block ul li{font-size:.85rem;color:var(--muted);padding-left:1.2rem;position:relative;}
+.happy-block ul li::before{content:'—';position:absolute;left:0;color:var(--gold);}
+.hh-time{
+  display:inline-block;margin-top:1.5rem;
+  font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--gold);border:1px solid var(--gold);padding:.5rem 1.2rem;
+}
+
+/* ─── PRIVATE / EVENTS ─── */
+.events{
+  display:grid;grid-template-columns:1.4fr 1fr;gap:7vw;align-items:center;
+  border-top:1px solid var(--border);
+}
+.events-content p{font-family:'Noto Serif',serif;font-size:.95rem;line-height:1.95;font-weight:300;color:var(--muted);margin-bottom:1rem;}
+.events-cards{display:flex;flex-direction:column;gap:1px;background:var(--border);}
+.ecard{background:var(--deep);padding:1.8rem 2rem;display:flex;gap:1.2rem;align-items:flex-start;}
+.ecard-icon{color:var(--gold);font-size:1.2rem;flex-shrink:0;margin-top:.1rem;}
+.ecard strong{display:block;font-size:.85rem;letter-spacing:.06em;color:var(--ivory);margin-bottom:.3rem;}
+.ecard span{font-size:.78rem;color:var(--dim);line-height:1.6;}
+
+/* ─── INFO / HOURS / CONTACT ─── */
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-top:1px solid var(--border);}
+.info-block{background:var(--ink);padding:4rem 3.5vw;}
+.info-block .sec-label{margin-bottom:1.5rem;}
+.info-block h3{font-family:'Cinzel',serif;font-size:1.35rem;color:var(--ivory);margin-bottom:2rem;font-weight:400;}
+.hours-list{list-style:none;display:flex;flex-direction:column;gap:.8rem;}
+.hours-list li{display:flex;justify-content:space-between;font-size:.82rem;color:var(--muted);padding-bottom:.8rem;border-bottom:1px solid rgba(210,170,90,.07);}
+.hours-list li.hl{color:var(--gold);}
+.contact-list{display:flex;flex-direction:column;gap:1.5rem;}
+.citem strong{display:block;font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(210,170,90,.5);margin-bottom:.35rem;}
+.citem a,.citem p{font-size:.86rem;color:var(--muted);line-height:1.7;text-decoration:none;}
+.citem a:hover{color:var(--gold);}
+.map-embed{width:100%;height:220px;border:none;filter:grayscale(60%) contrast(1.1);margin-top:1.5rem;border:1px solid var(--border);}
+
+/* ─── CTA BANNER ─── */
+.cta-banner{
+  padding:8rem 5vw;text-align:center;
+  background:linear-gradient(135deg,var(--panel),var(--deep));
+  border-top:1px solid var(--border);
+  position:relative;overflow:hidden;
+}
+.cta-banner::before{content:'';position:absolute;width:500px;height:500px;border-radius:50%;border:1px solid rgba(210,170,90,.06);top:50%;left:50%;transform:translate(-50%,-50%);box-shadow:0 0 0 100px rgba(210,170,90,.025),0 0 0 200px rgba(210,170,90,.012);}
+.cta-banner h2{font-family:'Cinzel',serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:400;color:var(--ivory);margin-bottom:1rem;position:relative;z-index:1;}
+.cta-banner h2 em{font-style:italic;font-family:'Noto Serif',serif;color:var(--gold);}
+.cta-banner p{font-size:.9rem;color:var(--dim);line-height:1.9;margin-bottom:3rem;position:relative;z-index:1;}
+.cta-banner .btn-primary{position:relative;z-index:1;}
+.cta-note{margin-top:1.5rem;font-size:.7rem;letter-spacing:.12em;color:rgba(210,170,90,.35);position:relative;z-index:1;}
+
+/* ─── FOOTER ─── */
+footer{background:var(--ink);padding:4.5rem 5vw 2.5rem;border-top:1px solid var(--border);}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr;gap:5vw;padding-bottom:3rem;border-bottom:1px solid var(--border);margin-bottom:2rem;}
+.f-brand .nav-logo{display:inline-flex;margin-bottom:1.2rem;}
+.f-brand p{font-size:.8rem;line-height:1.85;color:var(--dim);max-width:260px;}
+.f-col h4{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(210,170,90,.45);margin-bottom:1.2rem;}
+.f-col ul{list-style:none;display:flex;flex-direction:column;gap:.65rem;}
+.f-col ul li a{font-size:.82rem;color:var(--dim);text-decoration:none;transition:color .3s;}
+.f-col ul li a:hover{color:var(--gold);}
+.footer-bottom{display:flex;justify-content:space-between;font-size:.7rem;color:rgba(245,240,230,.18);letter-spacing:.05em;flex-wrap:wrap;gap:.5rem;}
+.social-row{display:flex;gap:.8rem;margin-top:1.2rem;}
+.soc{width:34px;height:34px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--dim);font-size:.75rem;text-decoration:none;transition:all .3s;}
+.soc:hover{border-color:var(--gold);color:var(--gold);}
+
+/* ─── ANIMATIONS ─── */
+@keyframes up{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.25;}}
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s ease;}
+.reveal.vis{opacity:1;transform:none;}
+.d1{transition-delay:.12s;} .d2{transition-delay:.24s;} .d3{transition-delay:.36s;}
+
+/* ─── MOBILE NAV ─── */
+.mobile-menu{display:none;flex-direction:column;gap:1.5rem;position:fixed;inset:0;background:rgba(10,10,8,.98);z-index:300;align-items:center;justify-content:center;}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{font-size:1.1rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);text-decoration:none;}
+.mobile-menu a:hover{color:var(--gold);}
+.mobile-close{position:absolute;top:1.5rem;right:2rem;background:none;border:none;color:var(--gold);font-size:1.5rem;cursor:pointer;}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:860px){
+  .nav-links,.nav-res{display:none;}
+  .hamburger{display:flex;}
+  .about,.events{grid-template-columns:1fr;}
+  .about-badge{display:none;}
+  .info-grid{grid-template-columns:1fr;}
+  .happy{grid-template-columns:1fr;}
+  .footer-top{grid-template-columns:1fr;}
+  .hero-btns{flex-direction:column;align-items:center;}
+}
+</style>
+</head>
+<body>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="closeMobile()">✕</button>
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#menu" onclick="closeMobile()">Menu</a>
+  <a href="#happyhour" onclick="closeMobile()">Happy Hour</a>
+  <a href="#events" onclick="closeMobile()">Private Events</a>
+  <a href="#info" onclick="closeMobile()">Hours & Location</a>
+  <a href="#reserve" onclick="closeMobile()" style="color:var(--gold);">Reservations</a>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="nav-logo" href="#">
+    <span>Pacific Rim Bistro</span>
+    <span>Downtown Atlanta</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#happyhour">Happy Hour</a></li>
+    <li><a href="#events">Events</a></li>
+    <li><a href="#info">Location</a></li>
+  </ul>
+  <a href="#reserve" class="nav-res">Reservations</a>
+  <button class="hamburger" onclick="openMobile()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <svg class="hero-accent" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="250" cy="250" r="200" stroke="white" stroke-width="0.8"/>
+    <circle cx="250" cy="250" r="140" stroke="white" stroke-width="0.6"/>
+    <circle cx="250" cy="250" r="80" stroke="white" stroke-width="0.5"/>
+    <path d="M250 50 L450 400 L50 400 Z" stroke="white" stroke-width="0.6" fill="none"/>
+    <path d="M250 450 L450 100 L50 100 Z" stroke="white" stroke-width="0.4" fill="none"/>
+    <line x1="50" y1="250" x2="450" y2="250" stroke="white" stroke-width="0.4"/>
+    <line x1="250" y1="50" x2="250" y2="450" stroke="white" stroke-width="0.4"/>
+  </svg>
+  <div class="hero-content">
+    <p class="hero-tag">Pan-Asian Cuisine · Downtown Atlanta, GA</p>
+    <h1 class="hero-title">Pacific <span>Rim</span> Bistro</h1>
+    <p class="hero-sub">From Mongolia to Thailand — the finest sushi &amp; Pan-Asian flavors in the heart of Atlanta</p>
+    <div class="hero-rule"></div>
+    <div class="hero-btns">
+      <a href="#menu" class="btn-primary">View Our Menu</a>
+      <a href="#reserve" class="btn-sec">Make a Reservation</a>
+    </div>
+  </div>
+  <div class="hero-scroll-hint">
+    <span>Explore</span>
+    <div class="scroll-bar"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="sec about" id="about">
+  <div class="about-visual reveal">
+    <div class="about-box">
+      <svg class="about-svg" viewBox="0 0 300 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Stylized chopsticks & bowl -->
+        <ellipse cx="150" cy="260" rx="100" ry="30" stroke="#d2aa5a" stroke-width="1.5" fill="none"/>
+        <ellipse cx="150" cy="260" rx="100" ry="30" stroke="#d2aa5a" stroke-width="0.5" fill="rgba(210,170,90,0.05)"/>
+        <path d="M60 260 Q60 210 70 200 Q80 190 90 200 Q100 210 100 260" stroke="#d2aa5a" stroke-width="1.5" fill="none"/>
+        <path d="M210 260 Q210 210 220 200 Q230 190 240 200 Q250 210 250 260" stroke="#d2aa5a" stroke-width="1.5" fill="none"/>
+        <path d="M80 200 Q150 170 220 200" stroke="#d2aa5a" stroke-width="0.8" fill="none" stroke-dasharray="4 4"/>
+        <!-- Chopsticks -->
+        <line x1="120" y1="60" x2="100" y2="240" stroke="#d2aa5a" stroke-width="2" stroke-linecap="round"/>
+        <line x1="180" y1="60" x2="160" y2="240" stroke="#d2aa5a" stroke-width="2" stroke-linecap="round"/>
+        <!-- Dots -->
+        <circle cx="150" cy="260" r="5" fill="#d2aa5a" opacity=".6"/>
+        <!-- Wave -->
+        <path d="M30 310 Q75 295 120 310 Q165 325 210 310 Q255 295 280 310" stroke="#d2aa5a" stroke-width="0.8" fill="none" opacity=".4"/>
+        <path d="M30 325 Q75 310 120 325 Q165 340 210 325 Q255 310 280 325" stroke="#d2aa5a" stroke-width="0.6" fill="none" opacity=".25"/>
+        <!-- Text -->
+        <text x="150" y="42" text-anchor="middle" font-family="Cinzel" font-size="11" fill="rgba(210,170,90,.5)" letter-spacing="5">PACIFIC RIM</text>
+      </svg>
+      <div class="about-badge"><strong>25+</strong><small>Years</small></div>
+    </div>
+  </div>
+  <div class="about-text reveal d1">
+    <span class="sec-label">Our Story</span>
+    <h2 class="sec-title">A <em>culinary voyage</em> through Asia</h2>
+    <div class="sec-rule"></div>
+    <p>Pacific Rim Bistro specializes in Pan-Asian cuisine — a vibrant journey spanning the frozen tundra of Mongolia to the tropics of Thailand, and the refined craft of Japanese sushi. We're proud to be Downtown Atlanta's premier sushi destination.</p>
+    <p>Our full sushi bar features the freshest sashimi and nigiri in the city, while our lively bar pours premium sake, signature cocktails, and an extensive wine list. Join us on the patio and soak in the energy of Atlanta's downtown bustle.</p>
+    <p>We accommodate groups of all sizes — from intimate date nights to large corporate events. Major kudos is what our guests give us, and exceptional hospitality is what we give back.</p>
+    <div class="about-stats">
+      <div class="stat"><strong>4.5★</strong><small>Avg. Rating</small></div>
+      <div class="stat"><strong>500+</strong><small>Reviews</small></div>
+      <div class="stat"><strong>100</strong><small>Health Score</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="sec menu-sec" id="menu">
+  <div class="menu-header reveal">
+    <span class="sec-label">À La Carte</span>
+    <h2 class="sec-title">Our <em>Menu</em></h2>
+    <p style="margin-top:1rem;font-size:.85rem;color:var(--dim);">Dinner: Mon–Sun 5pm – Close &nbsp;|&nbsp; Lunch: Mon–Fri 11:30am – 2:30pm</p>
+  </div>
+
+  <div class="menu-tabs reveal">
+    <button class="mtab on" onclick="showTab('appetizer',this)">Appetizers</button>
+    <button class="mtab" onclick="showTab('soup',this)">Soups & Salads</button>
+    <button class="mtab" onclick="showTab('entree',this)">Kitchen Entrées</button>
+    <button class="mtab" onclick="showTab('rolls',this)">Sushi Rolls</button>
+    <button class="mtab" onclick="showTab('special',this)">Chef's Rolls</button>
+  </div>
+
+  <!-- APPETIZERS -->
+  <div class="menu-pane on" id="pane-appetizer">
+    <div class="dish"><div class="dish-name"><span>Edamame</span><span class="dish-price">$6</span></div><div class="dish-desc">Boiled soy bean</div></div>
+    <div class="dish"><div class="dish-name"><span>Spicy Edamame</span><span class="dish-price">$6</span></div><div class="dish-desc">Boiled soy bean tossed with chili oil</div></div>
+    <div class="dish"><div class="dish-name"><span>Fried Pork Gyoza</span><span class="dish-price">$7 <small style="font-size:.7rem;">(4 pcs)</small></span></div></div>
+    <div class="dish"><div class="dish-name"><span>Vietnamese Spring Roll</span><span class="dish-price">$7 <small style="font-size:.7rem;">(2 pcs)</small></span></div></div>
+    <div class="dish"><div class="dish-name"><span>Spicy Calamari</span><span class="dish-price">$9</span></div><div class="dish-desc">Tempura battered calamari with fresh basil (4 oz)</div></div>
+    <div class="dish"><div class="dish-name"><span>Chicken Satay</span><span class="dish-price">$7</span></div><div class="dish-desc">Chicken breast marinated in curry, served with peanut sauce (2 skewers)</div></div>
+    <div class="dish"><div class="dish-name"><span>Tempura Combo</span><span class="dish-price">$9</span></div><div class="dish-desc">Shrimp & vegetables</div></div>
+    <div class="dish"><div class="dish-name"><span>Tuna Tataki ✶</span><span class="dish-price">$14</span></div><div class="dish-desc">Seared tuna, scallion, ponzu sauce</div></div>
+    <div class="dish"><div class="dish-name"><span>Yellowtail Carpaccio ✶</span><span class="dish-price">$14</span></div><div class="dish-desc">Yellowtail, jalapeño with ponzu sauce</div></div>
+    <div class="dish"><div class="dish-name"><span>Ahi Poke ✶</span><span class="dish-price">$14</span></div><div class="dish-desc">Tuna, avocado with house special sauce</div></div>
+    <div class="dish"><div class="dish-name"><span>Cu Kani ✶</span><span class="dish-price">$14</span></div><div class="dish-desc">Salmon, kani, avocado, wrapped in cucumber with sunomono sauce</div></div>
+    <div class="dish"><div class="dish-name"><span>Spicy Sashimi ✶</span><span class="dish-price">$14</span></div><div class="dish-desc">Assorted sashimi with Korean spicy sauce</div></div>
+    <div class="dish"><div class="dish-name"><span>Fried Oyster</span><span class="dish-price">$9</span></div><div class="dish-desc">Panko breaded fried oyster</div></div>
+    <div class="dish"><div class="dish-name"><span>Crispy Coconut Shrimp</span><span class="dish-price">$9</span></div></div>
+    <div class="dish"><div class="dish-name"><span>Brussels Sprouts</span><span class="dish-price">$10</span></div><div class="dish-desc">Sautéed in Thai lime chili sauce</div></div>
+    <div class="dish"><div class="dish-name"><span>Japanese Pork Ribs</span><span class="dish-price">$12</span></div><div class="dish-desc">Braised pork ribs tossed in teriyaki glaze</div></div>
+    <div class="dish"><div class="dish-name"><span>Ika Sansai</span><span class="dish-price">$8</span></div><div class="dish-desc">Seasoned squid salad</div></div>
+    <div class="dish"><div class="dish-name"><span>Side Fried Rice</span><span class="dish-price">$6</span></div></div>
+  </div>
+
+  <!-- SOUPS & SALADS -->
+  <div class="menu-pane" id="pane-soup">
+    <div class="dish"><div class="dish-name"><span>Miso Soup</span><span class="dish-price">$5</span></div></div>
+    <div class="dish"><div class="dish-name"><span>Mixed Green Salad</span><span class="dish-price">$6</span></div></div>
+    <div class="dish"><div class="dish-name"><span>Seaweed Salad</span><span class="dish-price">$8</span></div></div>
+    <div class="dish"><div class="dish-name"><span>Cucumber Kani Salad ✶</span><span class="dish-price">$6</span></div><div class="dish-desc">Cucumber, kani, masago, scallion with ponzu sauce</div></div>
+  </div>
+
+  <!-- KITCHEN ENTREES -->
+  <div class="menu-pane" id="pane-entree">
+    <div class="dish"><div class="dish-name"><span>Spicy Basil</span><span class="dish-price">$20–$30</span></div><div class="dish-desc">Stir fried with red onion, bell peppers, Thai basil. Choice of Tofu / Chicken / Shrimp / Mixed Seafood</div></div>
+    <div class="dish"><div class="dish-name"><span>Pad Thai Noodles</span><span class="dish-price">$18–$22</span></div><div class="dish-desc">Flat rice noodles, egg, tamarind sauce, bean sprouts, turnip, cilantro, crushed peanuts. Choice of Tofu / Chicken / Shrimp</div></div>
+    <div class="dish"><div class="dish-name"><span>Fried Rice</span><span class="dish-price">$16–$22</span></div><div class="dish-desc">Choice of Vegetable / Chicken / Shrimp / House</div></div>
+    <div class="dish"><div class="dish-name"><span>Thai Basil Noodles</span><span class="dish-price">$18–$22</span></div><div class="dish-desc">Wide rice noodle wok-tossed, fresh Thai basil, bell pepper, bean sprout, green onion in spicy sauce</div></div>
+    <div class="dish"><div class="dish-name"><span>Wanchi Shrimp</span><span class="dish-price">$26</span></div><div class="dish-desc">Crispy large shrimp wok tossed with candied walnuts in honey lemon aioli</div></div>
+    <div class="dish"><div class="dish-name"><span>Grilled Teriyaki Chicken</span><span class="dish-price">$23</span></div><div class="dish-desc">Pan grilled chicken breast, homemade teriyaki sauce, vegetable medley, steamed rice</div></div>
+    <div class="dish"><div class="dish-name"><span>Grilled Bangkok Chicken</span><span class="dish-price">$23</span></div><div class="dish-desc">Lemongrass, ginger & honey marinade, sweet chili sauce, vegetable medley & steamed rice</div></div>
+    <div class="dish"><div class="dish-name"><span>Grilled Shrimp & Roasted Vegetables</span><span class="dish-price">$26</span></div><div class="dish-desc">Large plump shrimp, roasted zucchini, red bell pepper, asparagus, miso aioli</div></div>
+    <div class="dish"><div class="dish-name"><span>Panang Curry</span><span class="dish-price">$20–$24</span></div><div class="dish-desc">Red and green bell peppers, asparagus, Thai basil. Choice of Tofu / Chicken / Shrimp</div></div>
+    <div class="dish"><div class="dish-name"><span>Thai Yellow Curry</span><span class="dish-price">$20–$24</span></div><div class="dish-desc">Potatoes, carrot, cashew nut, cucumber pickle. Choice of Tofu / Chicken / Shrimp</div></div>
+    <div class="dish"><div class="dish-name"><span>Spicy Seven Flavored Beef</span><span class="dish-price">$26</span></div><div class="dish-desc">Tender beef in seven spices, Thai basil, crushed peanuts, bean sprouts</div></div>
+    <div class="dish"><div class="dish-name"><span>Grilled Teriyaki Salmon</span><span class="dish-price">$30</span></div><div class="dish-desc">Grilled salmon, vegetable medley, teriyaki sauce, mashed potatoes</div></div>
+    <div class="dish"><div class="dish-name"><span>Jumbo Shrimp & Scallop Green Avocado Curry</span><span class="dish-price">$35</span></div><div class="dish-desc">Pan seared jumbo shrimp & scallop, asparagus, bell peppers, basil leaf and avocado</div></div>
+  </div>
+
+  <!-- CLASSIC ROLLS -->
+  <div class="menu-pane" id="pane-rolls">
+    <div class="dish"><div class="dish-name"><span>California Roll</span><span class="dish-price">$10</span></div><div class="dish-desc">Crabmeat salad, avocado, cucumber</div></div>
+    <div class="dish"><div class="dish-name"><span>Spicy Crab Roll</span><span class="dish-price">$10</span></div><div class="dish-desc">Crabmeat salad, avocado, cucumber with spicy sauce</div></div>
+    <div class="dish"><div class="dish-name"><span>Spicy Tuna ✶</span><span class="dish-price">$12</span></div><div class="dish-desc">Spicy tuna, cucumber</div></div>
+    <div class="dish"><div class="dish-name"><span>Philadelphia Roll</span><span class="dish-price">$12</span></div><div class="dish-desc">Smoked salmon, cream cheese, avocado</div></div>
+    <div class="dish"><div class="dish-name"><span>Eel Roll</span><span class="dish-price">$12</span></div><div class="dish-desc">Eel, avocado, cucumber</div></div>
+    <div class="dish"><div class="dish-name"><span>Shrimp Tempura Roll</span><span class="dish-price">$12</span></div><div class="dish-desc">Shrimp tempura, avocado with eel sauce</div></div>
+    <div class="dish"><div class="dish-name"><span>Alaska Roll ✶</span><span class="dish-price">$12</span></div><div class="dish-desc">Salmon, cream cheese, avocado</div></div>
+    <div class="dish"><div class="dish-name"><span>TNT Roll ✶</span><span class="dish-price">$12</span></div><div class="dish-desc">Assorted sashimi mix with wasabi mayo</div></div>
+    <div class="dish"><div class="dish-name"><span>Vegetable Roll</span><span class="dish-price">$9</span></div><div class="dish-desc">Avocado, asparagus, cucumber, pickled daikon</div></div>
+    <div class="dish"><div class="dish-name"><span>Salmon Avocado Roll ✶</span><span class="dish-price">$12</span></div></div>
+    <div class="dish"><div class="dish-name"><span>Tuna Avocado Roll ✶</span><span class="dish-price">$12</span></div></div>
+    <div class="dish"><div class="dish-name"><span>Tuna Roll ✶</span><span class="dish-price">$9 <small style="font-size:.7rem;">(6 pcs)</small></span></div></div>
+    <div class="dish"><div class="dish-name"><span>Salmon Roll ✶</span><span class="dish-price">$9 <small style="font-size:.7rem;">(6 pcs)</small></span></div></div>
+  </div>
+
+  <!-- CHEF'S / SPECIAL ROLLS -->
+  <div class="menu-pane" id="pane-special">
+    <div class="dish"><div class="dish-name"><span>Firecracker Roll ✶</span><span class="dish-price">$16</span></div><div class="dish-desc">Shrimp tempura, avocado, topped with spicy tuna, jalapeño, sriracha</div></div>
+    <div class="dish"><div class="dish-name"><span>Rainbow Roll ✶</span><span class="dish-price">$16</span></div><div class="dish-desc">California roll topped with assorted sashimi and avocado</div></div>
+    <div class="dish"><div class="dish-name"><span>Dragon Roll ✶</span><span class="dish-price">$16</span></div><div class="dish-desc">Shrimp tempura, cucumber, topped with eel and avocado</div></div>
+    <div class="dish"><div class="dish-name"><span>Spider Roll</span><span class="dish-price">$16</span></div><div class="dish-desc">Soft shell crab, avocado, cucumber, masago</div></div>
+    <div class="dish"><div class="dish-name"><span>Atlanta Roll ✶</span><span class="dish-price">$17</span></div><div class="dish-desc">Spicy tuna, jalapeño inside, topped with tuna, avocado, truffle oil</div></div>
+    <div class="dish"><div class="dish-name"><span>Japanese Ceviche ✶</span><span class="dish-price">$18</span></div><div class="dish-desc">Full of delicious sashimi and vegetables soaking in a perfect citrus dressing — a guest favorite!</div></div>
+    <div class="dish"><div class="dish-name"><span>Super Combo ✶</span><span class="dish-price">Market</span></div><div class="dish-desc">7 pieces sashimi, 5 pieces nigiri, California roll</div></div>
+  </div>
+
+  <p style="margin-top:2rem;font-size:.72rem;color:var(--dim);text-align:center;" class="reveal">✶ = Contains raw fish. Consuming raw or undercooked meats may increase your risk of foodborne illness.</p>
+</section>
+
+<!-- HAPPY HOUR -->
+<section class="happy" id="happyhour">
+  <div class="happy-block reveal">
+    <span class="sec-label">Daily Special</span>
+    <h3>Happy Hour</h3>
+    <p>Unwind after work with our legendary Happy Hour. Signature cocktails, premium sake, and bar bites — all at special prices.</p>
+    <ul>
+      <li>$2 off all cocktails & draft beer</li>
+      <li>Half-price select appetizers</li>
+      <li>Discounted sake selections</li>
+      <li>Bar menu available all night</li>
+    </ul>
+    <div class="hh-time">Mon – Fri &nbsp;·&nbsp; 4:30 PM – 6:00 PM</div>
+  </div>
+  <div class="happy-block reveal d1">
+    <span class="sec-label">Full Bar</span>
+    <h3>Drinks & Cocktails</h3>
+    <p>Our full bar features an extensive wine list, premium sake, signature cocktails, and a rotating seasonal drink menu crafted by our bartenders.</p>
+    <ul>
+      <li>Signature craft cocktails</li>
+      <li>Premium & sparkling sake</li>
+      <li>Extensive wine list (red, white, rosé)</li>
+      <li>Local & imported draft beers</li>
+      <li>Non-alcoholic mocktail menu</li>
+    </ul>
+    <div class="hh-time">Full Bar Open Daily</div>
+  </div>
+</section>
+
+<!-- EVENTS -->
+<section class="sec events" id="events">
+  <div class="events-content reveal">
+    <span class="sec-label">Private Dining</span>
+    <h2 class="sec-title">Host your next <em>event with us</em></h2>
+    <div class="sec-rule"></div>
+    <p>Pacific Rim Bistro is the perfect venue for any occasion — from intimate birthday celebrations to large corporate dinners. Our dedicated team ensures every detail is taken care of.</p>
+    <p>We've successfully hosted groups from 10 to 25+ guests, rolling with the punches and keeping the drinks flowing and food moving. Call us to discuss your event needs.</p>
+    <a href="tel:+14048930018" class="btn-primary" style="margin-top:1.5rem;display:inline-block;">Call to Book an Event</a>
+  </div>
+  <div class="events-cards reveal d1">
+    <div class="ecard"><div class="ecard-icon">🎂</div><div><strong>Birthday Parties</strong><span>Celebrate in style with custom menus and decorations</span></div></div>
+    <div class="ecard"><div class="ecard-icon">💼</div><div><strong>Corporate Dinners</strong><span>Impress clients in our private dining area</span></div></div>
+    <div class="ecard"><div class="ecard-icon">💍</div><div><strong>Bridal Showers</strong><span>Elegant settings for your special pre-wedding celebration</span></div></div>
+    <div class="ecard"><div class="ecard-icon">🎉</div><div><strong>Family Reunions</strong><span>We accommodate any group size — just call ahead</span></div></div>
+    <div class="ecard"><div class="ecard-icon">🍱</div><div><strong>Catering</strong><span>Off-site catering available for your Atlanta events</span></div></div>
+  </div>
+</section>
+
+<!-- INFO -->
+<div class="info-grid" id="info">
+  <div class="info-block reveal">
+    <span class="sec-label">Hours</span>
+    <h3>We're Open</h3>
+    <ul class="hours-list">
+      <li class="hl"><span>Lunch (Mon – Fri)</span><span>11:30 AM – 2:30 PM</span></li>
+      <li class="hl"><span>Dinner (Mon – Sun)</span><span>5:00 PM – Close</span></li>
+      <li><span>Happy Hour</span><span>Mon–Fri 4:30–6:00 PM</span></li>
+      <li><span>Weekend Brunch</span><span>Call for availability</span></li>
+    </ul>
+  </div>
+  <div class="info-block reveal d1">
+    <span class="sec-label">Find Us</span>
+    <h3>Location</h3>
+    <div class="contact-list">
+      <div class="citem"><strong>Address</strong><p>303 Peachtree Center Ave NE<br>Atlanta, GA 30303</p></div>
+      <div class="citem"><strong>Neighborhood</strong><p>Downtown Atlanta · Near Peachtree Center MARTA</p></div>
+      <div class="citem"><strong>Parking</strong><p>SunTrust Parking Lot: 2-hr validation for lunch, 3-hr for dinner</p></div>
+    </div>
+    <iframe class="map-embed" src="https://maps.google.com/maps?q=303+Peachtree+Center+Ave+NE+Atlanta+GA+30303&output=embed" allowfullscreen loading="lazy" title="Pacific Rim Bistro location"></iframe>
+  </div>
+  <div class="info-block reveal d2">
+    <span class="sec-label">Contact</span>
+    <h3>Get in Touch</h3>
+    <div class="contact-list">
+      <div class="citem"><strong>Phone</strong><a href="tel:+14048930018">(404) 893-0018</a></div>
+      <div class="citem"><strong>Alt. Phone</strong><a href="tel:+16789522410">(678) 952-2410</a></div>
+      <div class="citem"><strong>Email</strong><a href="mailto:pacificrimbistro@gmail.com">pacificrimbistro@gmail.com</a></div>
+      <div class="citem"><strong>Follow Us</strong>
+        <div class="social-row">
+          <a class="soc" href="https://www.instagram.com/pacificrimbistro/" target="_blank" title="Instagram">IG</a>
+          <a class="soc" href="https://www.facebook.com/PacificRimBistro/" target="_blank" title="Facebook">FB</a>
+          <a class="soc" href="https://www.twitter.com/BistroRim" target="_blank" title="Twitter">TW</a>
+          <a class="soc" href="https://www.yelp.com/biz/pacific-rim-bistro-atlanta-2" target="_blank" title="Yelp">YP</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RESERVATION CTA -->
+<section class="cta-banner" id="reserve">
+  <h2>Reserve Your <em>Table</em></h2>
+  <p>Join us for lunch, dinner, or a special occasion.<br>Walk-ins welcome — reservations recommended for groups.</p>
+  <a href="https://tmt.spotapps.co/reservations?spot_id=67047" target="_blank" class="btn-primary">Book Online</a>
+  <p class="cta-note">or call us at (404) 893-0018</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="f-brand">
+      <a class="nav-logo" href="#"><span>Pacific Rim Bistro</span><span>Downtown Atlanta</span></a>
+      <p>Pan-Asian cuisine, the freshest sushi, and signature cocktails in the heart of Downtown Atlanta since 1999.</p>
+      <p style="margin-top:.8rem;font-size:.75rem;color:rgba(210,170,90,.4);">303 Peachtree Center Ave NE · Atlanta, GA 30303</p>
+    </div>
+    <div class="f-col">
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#menu">Food Menu</a></li>
+        <li><a href="#happyhour">Happy Hour</a></li>
+        <li><a href="#events">Private Events</a></li>
+        <li><a href="#info">Hours & Location</a></li>
+      </ul>
+    </div>
+    <div class="f-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+14048930018">(404) 893-0018</a></li>
+        <li><a href="mailto:pacificrimbistro@gmail.com">pacificrimbistro@gmail.com</a></li>
+        <li><a href="https://tmt.spotapps.co/reservations?spot_id=67047" target="_blank">Make a Reservation</a></li>
+        <li><a href="https://tmt.spotapps.co/ordering-menu?spot_id=67047" target="_blank">Order Online</a></li>
+        <li><a href="https://tmt.spotapps.co/job-listings?spot_id=67047" target="_blank">Jobs</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Pacific Rim Bistro. All rights reserved.</span>
+    <span>303 Peachtree Center Ave NE, Atlanta, GA 30303</span>
+  </div>
+</footer>
+
+<script>
+// Sticky nav
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('stuck',scrollY>60));
+
+// Mobile nav
+function openMobile(){document.getElementById('mobileMenu').classList.add('open');}
+function closeMobile(){document.getElementById('mobileMenu').classList.remove('open');}
+
+// Menu tabs
+function showTab(id,btn){
+  document.querySelectorAll('.mtab').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('.menu-pane').forEach(p=>p.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('pane-'+id).classList.add('on');
+}
+
+// Scroll reveal
+const io=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('vis'),i*80);io.unobserve(e.target);}});
+},{threshold:.07});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
