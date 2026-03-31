@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Pacific Rim Bistro – Pan-Asian cuisine, sushi, and cocktails in Downtown Atlanta. 303 Peachtree Center Ave NE.">
+<title>Pacific Rim Bistro | Downtown Atlanta</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Lato:ital,wght@0,300;0,400;1,300&family=Noto+Serif:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:    #0f0e0c;
+  --deep:   #1a1714;
+  --panel:  #222019;
+  --border: rgba(210,170,90,0.18);
+  --gold:   #d2aa5a;
+  --gold2:  #e8c87a;
+  --ivory:  #f5f0e6;
+  --muted:  rgba(245,240,230,0.55);
+  --dim:    rgba(245,240,230,0.32);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--ink);color:var(--ivory);font-family:'Lato',sans-serif;font-weight:300;overflow-x:hidden;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 5vw;transition:background .5s,padding .4s;}
+nav.stuck{background:rgba(15,14,12,.95);backdrop-filter:blur(14px);padding:1rem 5vw;border-bottom:1px solid var(--border);}
+.nav-logo{display:flex;flex-direction:column;text-decoration:none;}
+.nav-logo span:first-child{font-family:'Cinzel',serif;font-size:1.15rem;letter-spacing:.18em;color:var(--gold);line-height:1;}
+.nav-logo span:last-child{font-size:.6rem;letter-spacing:.35em;text-transform:uppercase;color:var(--dim);margin-top:.15rem;}
+.nav-links{display:flex;gap:2.2rem;list-style:none;}
+.nav-links a{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s;}
+.nav-links a:hover{color:var(--gold);}
+.nav-res{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;padding:.55rem 1.5rem;border:1px solid var(--gold);color:var(--gold);text-decoration:none;transition:background .3s,color .3s;}
+.nav-res:hover{background:var(--gold);color:var(--ink);}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;}
+.hamburger span{width:24px;height:1.5px;background:var(--gold);display:block;}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.hero-bg-img{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1617196034183-421b4040ed20?w=1600&q=80') center/cover no-repeat;filter:brightness(0.25);}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(160deg,rgba(20,14,4,.7) 0%,rgba(10,10,8,.5) 100%);}
+.hero-content{position:relative;z-index:2;text-align:center;padding:2rem;}
+.hero-tag{font-size:.65rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:1.8rem;opacity:0;animation:up .8s ease forwards .3s;}
+.hero-title{font-family:'Cinzel',serif;font-size:clamp(2.8rem,9vw,7.5rem);font-weight:400;letter-spacing:.08em;line-height:1;color:var(--ivory);opacity:0;animation:up .9s ease forwards .6s;}
+.hero-title span{color:var(--gold);}
+.hero-sub{font-family:'Noto Serif',serif;font-style:italic;font-weight:300;font-size:clamp(.95rem,2.2vw,1.25rem);color:var(--muted);letter-spacing:.06em;margin-top:1.2rem;opacity:0;animation:up .8s ease forwards 1s;}
+.hero-rule{width:80px;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);margin:2rem auto;opacity:0;animation:up .8s ease forwards 1.2s;}
+.hero-btns{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;opacity:0;animation:up .8s ease forwards 1.5s;}
+.btn-primary{background:var(--gold);color:var(--ink);padding:.85rem 2.4rem;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;font-weight:400;text-decoration:none;transition:background .3s,transform .2s;display:inline-block;}
+.btn-primary:hover{background:var(--gold2);transform:translateY(-2px);}
+.btn-sec{background:transparent;color:var(--ivory);padding:.85rem 2.4rem;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;font-weight:300;text-decoration:none;border:1px solid rgba(245,240,230,.25);transition:border-color .3s,color .3s;display:inline-block;}
+.btn-sec:hover{border-color:var(--gold);color:var(--gold);}
+.hero-scroll-hint{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.6rem;opacity:0;animation:up .8s ease forwards 2.1s;}
+.hero-scroll-hint span{font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:var(--dim);}
+.scroll-bar{width:1px;height:44px;background:linear-gradient(to bottom,var(--gold),transparent);animation:pulse 2s ease infinite;}
+
+/* ABOUT */
+.sec{padding:7rem 5vw;}
+.sec-label{font-size:.62rem;letter-spacing:.38em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:1.2rem;}
+.sec-title{font-family:'Cinzel',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:400;color:var(--ivory);line-height:1.2;}
+.sec-title em{font-style:italic;font-family:'Noto Serif',serif;color:var(--gold);}
+.sec-rule{width:40px;height:1px;background:var(--gold);margin:1.8rem 0;}
+.about{display:grid;grid-template-columns:1fr 1.5fr;gap:7vw;align-items:center;border-top:1px solid var(--border);}
+.about-visual{position:relative;}
+.about-img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;filter:brightness(.85);}
+.about-badge{position:absolute;bottom:-16px;right:-16px;width:110px;height:110px;background:var(--gold);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--ink);}
+.about-badge strong{font-family:'Cinzel',serif;font-size:1.8rem;line-height:1;}
+.about-badge small{font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;font-weight:400;margin-top:.2rem;}
+.about-text p{font-family:'Noto Serif',serif;font-size:.95rem;line-height:1.95;font-weight:300;color:var(--muted);margin-bottom:1.2rem;}
+.about-stats{display:flex;gap:3rem;margin-top:2.5rem;padding-top:2rem;border-top:1px solid var(--border);}
+.stat strong{font-family:'Cinzel',serif;font-size:2rem;color:var(--gold);display:block;line-height:1;}
+.stat small{font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);}
+
+/* MENU */
+.menu-sec{background:var(--deep);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.menu-header{text-align:center;margin-bottom:4rem;}
+.menu-tabs{display:flex;justify-content:center;flex-wrap:wrap;gap:0;margin-bottom:3.5rem;border-bottom:1px solid var(--border);}
+.mtab{background:none;border:none;cursor:pointer;padding:.75rem 1.8rem;font-size:.67rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);font-family:'Lato',sans-serif;font-weight:300;position:relative;transition:color .3s;}
+.mtab::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform .35s;}
+.mtab.on{color:var(--gold);}
+.mtab.on::after{transform:scaleX(1);}
+.menu-pane{display:none;}
+.menu-pane.on{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1px;background:var(--border);}
+
+/* DISH CARD */
+.dish{background:var(--ink);transition:background .35s;position:relative;display:flex;flex-direction:column;}
+.dish:hover{background:rgba(210,170,90,.04);}
+.dish-img{width:100%;height:180px;object-fit:cover;display:block;filter:brightness(.88);transition:filter .4s;}
+.dish:hover .dish-img{filter:brightness(1);}
+.dish-no-img{width:100%;height:180px;background:linear-gradient(135deg,var(--panel),var(--deep));display:flex;align-items:center;justify-content:center;}
+.dish-no-img span{font-size:2.5rem;opacity:.3;}
+.dish-body{padding:1.4rem 1.8rem 1.8rem;}
+.dish-name{font-size:1rem;font-weight:400;color:var(--ivory);margin-bottom:.3rem;display:flex;justify-content:space-between;align-items:baseline;gap:.8rem;}
+.dish-price{font-family:'Noto Serif',serif;font-style:italic;color:var(--gold);font-size:.92rem;white-space:nowrap;flex-shrink:0;}
+.dish-desc{font-size:.78rem;line-height:1.7;color:var(--dim);}
+
+/* HAPPY HOUR */
+.happy{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border-top:1px solid var(--border);}
+.happy-block{background:var(--ink);padding:4rem 5vw;position:relative;overflow:hidden;}
+.happy-bg{position:absolute;inset:0;object-fit:cover;width:100%;height:100%;filter:brightness(.18);}
+.happy-content{position:relative;z-index:1;}
+.happy-block h3{font-family:'Cinzel',serif;font-size:1.5rem;color:var(--ivory);margin-bottom:1.5rem;}
+.happy-block p{font-size:.9rem;line-height:1.85;color:var(--muted);}
+.happy-block ul{list-style:none;display:flex;flex-direction:column;gap:.7rem;margin-top:1rem;}
+.happy-block ul li{font-size:.85rem;color:var(--muted);padding-left:1.2rem;position:relative;}
+.happy-block ul li::before{content:'—';position:absolute;left:0;color:var(--gold);}
+.hh-time{display:inline-block;margin-top:1.5rem;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold);padding:.5rem 1.2rem;}
+
+/* EVENTS */
+.events{display:grid;grid-template-columns:1.4fr 1fr;gap:7vw;align-items:center;border-top:1px solid var(--border);}
+.events-content p{font-family:'Noto Serif',serif;font-size:.95rem;line-height:1.95;font-weight:300;color:var(--muted);margin-bottom:1rem;}
+.events-img{width:100%;aspect-ratio:3/2;object-fit:cover;filter:brightness(.75);}
+.events-cards{display:flex;flex-direction:column;gap:1px;background:var(--border);}
+.ecard{background:var(--deep);padding:1.6rem 2rem;display:flex;gap:1.2rem;align-items:flex-start;}
+.ecard-icon{color:var(--gold);font-size:1.1rem;flex-shrink:0;}
+.ecard strong{display:block;font-size:.85rem;letter-spacing:.06em;color:var(--ivory);margin-bottom:.25rem;}
+.ecard span{font-size:.78rem;color:var(--dim);line-height:1.6;}
+
+/* INFO */
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-top:1px solid var(--border);}
+.info-block{background:var(--ink);padding:4rem 3.5vw;}
+.info-block .sec-label{margin-bottom:1.5rem;}
+.info-block h3{font-family:'Cinzel',serif;font-size:1.35rem;color:var(--ivory);margin-bottom:2rem;font-weight:400;}
+.hours-list{list-style:none;display:flex;flex-direction:column;gap:.8rem;}
+.hours-list li{display:flex;justify-content:space-between;font-size:.82rem;color:var(--muted);padding-bottom:.8rem;border-bottom:1px solid rgba(210,170,90,.07);}
+.hours-list li.hl{color:var(--gold);}
+.contact-list{display:flex;flex-direction:column;gap:1.5rem;}
+.citem strong{display:block;font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(210,170,90,.5);margin-bottom:.35rem;}
+.citem a,.citem p{font-size:.86rem;color:var(--muted);line-height:1.7;text-decoration:none;}
+.citem a:hover{color:var(--gold);}
+.map-embed{width:100%;height:220px;border:none;filter:grayscale(60%) contrast(1.1);margin-top:1.5rem;border:1px solid var(--border);}
+
+/* CTA */
+.cta-banner{padding:8rem 5vw;text-align:center;position:relative;overflow:hidden;border-top:1px solid var(--border);}
+.cta-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.15);}
+.cta-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(26,23,20,.9),rgba(15,14,12,.8));}
+.cta-content{position:relative;z-index:1;}
+.cta-banner h2{font-family:'Cinzel',serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:400;color:var(--ivory);margin-bottom:1rem;}
+.cta-banner h2 em{font-style:italic;font-family:'Noto Serif',serif;color:var(--gold);}
+.cta-banner p{font-size:.9rem;color:var(--dim);line-height:1.9;margin-bottom:3rem;}
+.cta-note{margin-top:1.5rem;font-size:.7rem;letter-spacing:.12em;color:rgba(210,170,90,.35);}
+
+/* FOOTER */
+footer{background:var(--ink);padding:4.5rem 5vw 2.5rem;border-top:1px solid var(--border);}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr;gap:5vw;padding-bottom:3rem;border-bottom:1px solid var(--border);margin-bottom:2rem;}
+.f-brand p{font-size:.8rem;line-height:1.85;color:var(--dim);max-width:260px;margin-top:1rem;}
+.f-col h4{font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(210,170,90,.45);margin-bottom:1.2rem;}
+.f-col ul{list-style:none;display:flex;flex-direction:column;gap:.65rem;}
+.f-col ul li a{font-size:.82rem;color:var(--dim);text-decoration:none;transition:color .3s;}
+.f-col ul li a:hover{color:var(--gold);}
+.footer-bottom{display:flex;justify-content:space-between;font-size:.7rem;color:rgba(245,240,230,.18);letter-spacing:.05em;flex-wrap:wrap;gap:.5rem;}
+.social-row{display:flex;gap:.8rem;margin-top:1.2rem;}
+.soc{width:34px;height:34px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--dim);font-size:.75rem;text-decoration:none;transition:all .3s;}
+.soc:hover{border-color:var(--gold);color:var(--gold);}
+
+/* MOBILE */
+.mobile-menu{display:none;flex-direction:column;gap:1.5rem;position:fixed;inset:0;background:rgba(10,10,8,.98);z-index:300;align-items:center;justify-content:center;}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{font-size:1.1rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);text-decoration:none;}
+.mobile-menu a:hover{color:var(--gold);}
+.mobile-close{position:absolute;top:1.5rem;right:2rem;background:none;border:none;color:var(--gold);font-size:1.5rem;cursor:pointer;}
+
+@keyframes up{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.25;}}
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s ease;}
+.reveal.vis{opacity:1;transform:none;}
+.d1{transition-delay:.14s;}.d2{transition-delay:.28s;}
+
+@media(max-width:860px){
+  .nav-links,.nav-res{display:none;}
+  .hamburger{display:flex;}
+  .about,.events{grid-template-columns:1fr;}
+  .about-badge{display:none;}
+  .info-grid,.happy{grid-template-columns:1fr;}
+  .footer-top{grid-template-columns:1fr;}
+  .hero-btns{flex-direction:column;align-items:center;}
+  .menu-pane.on{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="closeMobile()">✕</button>
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#menu" onclick="closeMobile()">Menu</a>
+  <a href="#happyhour" onclick="closeMobile()">Happy Hour</a>
+  <a href="#events" onclick="closeMobile()">Private Events</a>
+  <a href="#info" onclick="closeMobile()">Hours & Location</a>
+  <a href="#reserve" onclick="closeMobile()" style="color:var(--gold);">Reservations</a>
+</div>
+
+<nav id="nav">
+  <a class="nav-logo" href="#">
+    <span>Pacific Rim Bistro</span>
+    <span>Downtown Atlanta</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#happyhour">Happy Hour</a></li>
+    <li><a href="#events">Events</a></li>
+    <li><a href="#info">Location</a></li>
+  </ul>
+  <a href="#reserve" class="nav-res">Reservations</a>
+  <button class="hamburger" onclick="openMobile()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-img"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-tag">Pan-Asian Cuisine · Downtown Atlanta, GA</p>
+    <h1 class="hero-title">Pacific <span>Rim</span> Bistro</h1>
+    <p class="hero-sub">From Mongolia to Thailand — the finest sushi &amp; Pan-Asian flavors in the heart of Atlanta</p>
+    <div class="hero-rule"></div>
+    <div class="hero-btns">
+      <a href="#menu" class="btn-primary">View Our Menu</a>
+      <a href="#reserve" class="btn-sec">Make a Reservation</a>
+    </div>
+  </div>
+  <div class="hero-scroll-hint">
+    <span>Explore</span>
+    <div class="scroll-bar"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="sec about" id="about">
+  <div class="about-visual reveal">
+    <img class="about-img" src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=800&q=80" alt="Sushi platter at Pacific Rim Bistro" loading="lazy">
+    <div class="about-badge"><strong>25+</strong><small>Years</small></div>
+  </div>
+  <div class="about-text reveal d1">
+    <span class="sec-label">Our Story</span>
+    <h2 class="sec-title">A <em>culinary voyage</em> through Asia</h2>
+    <div class="sec-rule"></div>
+    <p>Pacific Rim Bistro specializes in Pan-Asian cuisine — a vibrant journey spanning the frozen tundra of Mongolia to the tropics of Thailand, and the refined craft of Japanese sushi. We're proud to be Downtown Atlanta's premier sushi destination.</p>
+    <p>Our full sushi bar features the freshest sashimi and nigiri in the city, while our lively bar pours premium sake, signature cocktails, and an extensive wine list. Join us on the patio and soak in the energy of Atlanta's downtown bustle.</p>
+    <p>We accommodate groups of all sizes — from intimate date nights to large corporate events.</p>
+    <div class="about-stats">
+      <div class="stat"><strong>4.5★</strong><small>Avg. Rating</small></div>
+      <div class="stat"><strong>500+</strong><small>Reviews</small></div>
+      <div class="stat"><strong>100</strong><small>Health Score</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="sec menu-sec" id="menu">
+  <div class="menu-header reveal">
+    <span class="sec-label">À La Carte</span>
+    <h2 class="sec-title">Our <em>Menu</em></h2>
+    <p style="margin-top:1rem;font-size:.85rem;color:var(--dim);">Dinner: Mon–Sun 5pm – Close &nbsp;|&nbsp; Lunch: Mon–Fri 11:30am – 2:30pm</p>
+  </div>
+  <div class="menu-tabs reveal">
+    <button class="mtab on"  onclick="showTab('app',this)">Appetizers</button>
+    <button class="mtab"     onclick="showTab('soup',this)">Soups & Salads</button>
+    <button class="mtab"     onclick="showTab('entree',this)">Kitchen Entrées</button>
+    <button class="mtab"     onclick="showTab('classic',this)">Classic Rolls</button>
+    <button class="mtab"     onclick="showTab('special',this)">Special Rolls</button>
+    <button class="mtab"     onclick="showTab('chef',this)">Chef's Rolls</button>
+    <button class="mtab"     onclick="showTab('sushi',this)">Sushi & Sashimi</button>
+  </div>
+
+  <!-- APPETIZERS -->
+  <div class="menu-pane on" id="pane-app">
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&q=75" alt="Edamame" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Edamame</span><span class="dish-price">$6</span></div><div class="dish-desc">Boiled soy bean</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&q=75" alt="Spicy Edamame" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Spicy Edamame</span><span class="dish-price">$6</span></div><div class="dish-desc">Boiled soy bean tossed with chili oil</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=600&q=75" alt="Fried Pork Gyoza" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Fried Pork Gyoza</span><span class="dish-price">$7</span></div><div class="dish-desc">Pan-fried pork dumplings (4 pcs)</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=75" alt="Vietnamese Spring Roll" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Vietnamese Spring Roll</span><span class="dish-price">$7</span></div><div class="dish-desc">Fresh vegetables, Vietnamese dipping sauce (2 pcs)</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1625938144755-652e08e359b7?w=600&q=75" alt="Spicy Calamari" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Spicy Calamari</span><span class="dish-price">$9</span></div><div class="dish-desc">Tempura battered calamari with fresh basil</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600&q=75" alt="Chicken Satay" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Chicken Satay</span><span class="dish-price">$7</span></div><div class="dish-desc">Curry-marinated chicken with peanut sauce (2 skewers)</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1559410545-0bdcd187e0a6?w=600&q=75" alt="Tempura Combo" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Tempura Combo</span><span class="dish-price">$9</span></div><div class="dish-desc">Shrimp & vegetables</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1611143669185-af224c5e3252?w=600&q=75" alt="Tuna Tataki" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Tuna Tataki ✶</span><span class="dish-price">$14</span></div><div class="dish-desc">Seared tuna, scallion, ponzu sauce</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1617196034099-15f84a4ba2cc?w=600&q=75" alt="Ahi Poke" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Ahi Poke ✶</span><span class="dish-price">$14</span></div><div class="dish-desc">Tuna, avocado with house special sauce</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1607301405390-d831c242f59b?w=600&q=75" alt="Yellowtail Carpaccio" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Yellowtail Carpaccio ✶</span><span class="dish-price">$14</span></div><div class="dish-desc">Yellowtail, jalapeño with ponzu sauce</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1640714337308-4a2f38e44bd6?w=600&q=75" alt="Fried Oyster" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Fried Oyster</span><span class="dish-price">$9</span></div><div class="dish-desc">Panko breaded fried oyster</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=600&q=75" alt="Brussels Sprouts" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Brussels Sprouts</span><span class="dish-price">$10</span></div><div class="dish-desc">Sautéed in Thai lime chili sauce</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1544025162-d76694265947?w=600&q=75" alt="Japanese Pork Ribs" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Japanese Pork Ribs</span><span class="dish-price">$12</span></div><div class="dish-desc">Braised pork ribs tossed in teriyaki glaze</div></div></div>
+    <div class="dish"><div class="dish-no-img"><span>🦑</span></div><div class="dish-body"><div class="dish-name"><span>Ika Sansai</span><span class="dish-price">$8</span></div><div class="dish-desc">Seasoned squid salad</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=600&q=75" alt="Crispy Coconut Shrimp" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Crispy Coconut Shrimp</span><span class="dish-price">$9</span></div></div></div>
+    <div class="dish"><div class="dish-no-img"><span>🥒</span></div><div class="dish-body"><div class="dish-name"><span>Cu Kani ✶</span><span class="dish-price">$14</span></div><div class="dish-desc">Salmon, kani, avocado wrapped in cucumber with sunomono sauce</div></div></div>
+    <div class="dish"><div class="dish-no-img"><span>🌶️</span></div><div class="dish-body"><div class="dish-name"><span>Spicy Sashimi ✶</span><span class="dish-price">$14</span></div><div class="dish-desc">Assorted sashimi with Korean spicy sauce</div></div></div>
+    <div class="dish"><div class="dish-no-img"><span>🍚</span></div><div class="dish-body"><div class="dish-name"><span>Side Fried Rice</span><span class="dish-price">$6</span></div></div></div>
+  </div>
+
+  <!-- SOUPS & SALADS -->
+  <div class="menu-pane" id="pane-soup">
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1547592180-85f173990554?w=600&q=75" alt="Miso Soup" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Miso Soup</span><span class="dish-price">$5</span></div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&q=75" alt="Mixed Green Salad" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Mixed Green Salad</span><span class="dish-price">$6</span></div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1611143669185-af224c5e3252?w=600&q=75" alt="Seaweed Salad" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Seaweed Salad</span><span class="dish-price">$8</span></div></div></div>
+    <div class="dish"><div class="dish-no-img"><span>🥒</span></div><div class="dish-body"><div class="dish-name"><span>Cucumber Kani Salad ✶</span><span class="dish-price">$6</span></div><div class="dish-desc">Cucumber, kani, masago, scallion with ponzu sauce</div></div></div>
+  </div>
+
+  <!-- KITCHEN ENTREES -->
+  <div class="menu-pane" id="pane-entree">
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=600&q=75" alt="Pad Thai" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Pad Thai Noodles</span><span class="dish-price">$18–$22</span></div><div class="dish-desc">Flat rice noodles, egg, tamarind sauce, bean sprouts, cilantro, crushed peanuts. Tofu / Chicken / Shrimp</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=600&q=75" alt="Thai Curry" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Panang Curry</span><span class="dish-price">$20–$24</span></div><div class="dish-desc">Red & green bell peppers, asparagus, Thai basil. Tofu / Chicken / Shrimp</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=600&q=75" alt="Yellow Curry" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Thai Yellow Curry</span><span class="dish-price">$20–$24</span></div><div class="dish-desc">Potatoes, carrot, cashew nut, cucumber pickle. Tofu / Chicken / Shrimp</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=600&q=75" alt="Fried Rice" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Fried Rice</span><span class="dish-price">$16–$22</span></div><div class="dish-desc">Vegetable / Chicken / Shrimp / House</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=600&q=75" alt="Thai Basil Noodles" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Thai Basil Noodles</span><span class="dish-price">$18–$22</span></div><div class="dish-desc">Wide rice noodle wok-tossed, Thai basil, bell pepper, bean sprout in spicy sauce</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=600&q=75" alt="Spicy Basil" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Spicy Basil</span><span class="dish-price">$20–$30</span></div><div class="dish-desc">Stir fried with red onion, bell peppers, Thai basil. Tofu / Chicken / Shrimp / Mixed Seafood</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=600&q=75" alt="Wanchi Shrimp" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Wanchi Shrimp</span><span class="dish-price">$26</span></div><div class="dish-desc">Crispy large shrimp wok tossed with candied walnuts in honey lemon aioli</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1598514982901-ae62764ae75e?w=600&q=75" alt="Grilled Teriyaki Chicken" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Grilled Teriyaki Chicken</span><span class="dish-price">$23</span></div><div class="dish-desc">Pan grilled chicken breast, homemade teriyaki sauce, vegetable medley, steamed rice</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1598514982901-ae62764ae75e?w=600&q=75" alt="Grilled Bangkok Chicken" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Grilled Bangkok Chicken</span><span class="dish-price">$23</span></div><div class="dish-desc">Lemongrass, ginger & honey marinade, sweet chili sauce, vegetable medley</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1510130387422-82bed34b37e9?w=600&q=75" alt="Grilled Salmon" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Grilled Teriyaki Salmon</span><span class="dish-price">$30</span></div><div class="dish-desc">Grilled salmon, vegetable medley, teriyaki sauce, mashed potatoes</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=600&q=75" alt="Grilled Shrimp" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Grilled Shrimp & Roasted Vegetables</span><span class="dish-price">$26</span></div><div class="dish-desc">Large plump shrimp, roasted zucchini, red bell pepper, asparagus, miso aioli</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=75" alt="Seven Flavored Beef" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Spicy Seven Flavored Beef</span><span class="dish-price">$26</span></div><div class="dish-desc">Tender beef in seven spices, wok tossed with Thai basil, crushed peanuts, bean sprouts</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=600&q=75" alt="Avocado Curry" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Jumbo Shrimp & Scallop Green Avocado Curry</span><span class="dish-price">$35</span></div><div class="dish-desc">Pan seared jumbo shrimp & scallop, asparagus, bell peppers, basil leaf and avocado</div></div></div>
+  </div>
+
+  <!-- CLASSIC ROLLS -->
+  <div class="menu-pane" id="pane-classic">
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1617196034183-421b4040ed20?w=600&q=75" alt="California Roll" loading="lazy"><div class="dish-body"><div class="dish-name"><span>California Roll</span><span class="dish-price">$10</span></div><div class="dish-desc">Crabmeat salad, avocado, cucumber</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1617196034183-421b4040ed20?w=600&q=75" alt="Spicy Crab Roll" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Spicy Crab Roll</span><span class="dish-price">$10</span></div><div class="dish-desc">Crabmeat salad, avocado, cucumber with spicy sauce</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=600&q=75" alt="Spicy Tuna Roll" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Spicy Tuna ✶</span><span class="dish-price">$12</span></div><div class="dish-desc">Spicy tuna, cucumber</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1617196034082-bef4f1a4b3e8?w=600&q=75" alt="Philadelphia Roll" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Philadelphia Roll</span><span class="dish-price">$12</span></div><div class="dish-desc">Smoked salmon, cream cheese, avocado</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1617196034183-421b4040ed20?w=600&q=75" alt="Eel Roll" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Eel Roll</span><span class="dish-price">$12</span></div><div class="dish-desc">Eel, avocado, cucumber</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1559410545-0bdcd187e0a6?w=600&q=75" alt="Shrimp Tempura Roll" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Shrimp Tempura Roll</span><span class="dish-price">$12</span></div><div class="dish-desc">Shrimp tempura, avocado with eel sauce</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1617196034082-bef4f1a4b3e8?w=600&q=75" alt="Alaska Roll" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Alaska Roll ✶</span><span class="dish-price">$12</span></div><div class="dish-desc">Salmon, cream cheese, avocado</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=600&q=75" alt="TNT Roll" loading="lazy"><div class="dish-body"><div class="dish-name"><span>TNT Roll ✶</span><span class="dish-price">$12</span></div><div class="dish-desc">Assorted sashimi mix with wasabi mayo</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1617196034183-421b4040ed20?w=600&q=75" alt="Vegetable Roll" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Vegetable Roll</span><span class="dish-price">$9</span></div><div class="dish-desc">Avocado, asparagus, cucumber, pickled daikon</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1617196034082-bef4f1a4b3e8?w=600&q=75" alt="Salmon Avocado Roll" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Salmon Avocado Roll ✶</span><span class="dish-price">$12</span></div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=600&q=75" alt="Tuna Avocado Roll" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Tuna Avocado Roll ✶</span><span class="dish-price">$12</span></div></div></div>
+    <div class="dish"><div class="dish-no-img"><span>🍣</span></div><div class="dish-body"><div class="dish-name"><span>Avocado Roll</span><span class="dish-price">$6</span></div><div class="dish-desc">6 pcs</div></div></div>
+    <div class="dish"><div class="dish-no-img"><span>🍣</span></div><div class="dish-body"><div class="dish-name"><span>Cucumber Roll</span><span class="dish-price">$6</span></div><div class="dish-desc">6 pcs</div></div></div>
+  </div>
+
+  <!-- SPECIAL ROLLS -->
+  <div class="menu-pane" id="pane-special">
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1617196034183-421b4040ed20?w=600&q=75" alt="Mango Crunch Roll" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Mango Crunch Roll</span><span class="dish-price">$16</span></div><div class="dish-desc">Crab meat, avocado, cucumber inside, avocado on top with mango sauce</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=600&q=75" alt="Lemon Twist Roll" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Lemon Twist Roll</span><span class="dish-price">$16</span></div><div class="dish-desc">Shrimp tempura, cucumber, crab meat inside; salmon, lemon, masago on top with eel sauce, spicy mayo</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1617196034183-421b4040ed20?w=600&q=75" alt="Fire Bomber Roll" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Fire Bomber Roll 🌶️</span><span class="dish-price">$16</span></div><div class="dish-desc">Shrimp tempura, avocado inside; spicy crab on top — extremely spicy!</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1559410545-0bdcd187e0a6?w=600&q=75" alt="Super Crunch Roll" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Super Crunch Roll</span><span class="dish-price">$16</span></div><div class="dish-desc">Shrimp tempura, avocado inside; spicy crab, tempura flake, masago on top with eel sauce, spicy mayo</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=600&q=75" alt="Firecracker Roll" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Firecracker Roll ✶</span><span class="dish-price">$16</span></div><div class="dish-desc">Spicy tuna, tempura flakes, firecracker mix (crabmeat, avocado, spicy mayo) with jalapeño peppers</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1617196034082-bef4f1a4b3e8?w=600&q=75" alt="I Love Tuna Roll" loading="lazy"><div class="dish-body"><div class="dish-name"><span>I Love Tuna Roll ✶</span><span class="dish-price">$16</span></div><div class="dish-desc">Crab meat, avocado, cucumber with tuna, crunch, masago, scallion, eel sauce</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1617196034082-bef4f1a4b3e8?w=600&q=75" alt="I Love Salmon Roll" loading="lazy"><div class="dish-body"><div class="dish-name"><span>I Love Salmon Roll ✶</span><span class="dish-price">$16</span></div><div class="dish-desc">Crab meat, avocado, cucumber with salmon, crunch, masago, scallion, eel sauce</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1617196034183-421b4040ed20?w=600&q=75" alt="Spider Roll" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Spider Roll</span><span class="dish-price">$16</span></div><div class="dish-desc">Softshell crab, avocado, kani, asparagus with masago, eel sauce (6 pcs)</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1617196034183-421b4040ed20?w=600&q=75" alt="Dragon Roll" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Dragon Roll</span><span class="dish-price">$16</span></div><div class="dish-desc">Crab meat, avocado, cucumber with eel, eel sauce</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=600&q=75" alt="Rainbow Roll" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Rainbow Roll ✶</span><span class="dish-price">$16</span></div><div class="dish-desc">Crab meat, avocado, cucumber with sliced fish and avocado</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1617196034183-421b4040ed20?w=600&q=75" alt="Atlanta Roll" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Atlanta Roll ✶</span><span class="dish-price">$16</span></div><div class="dish-desc">Crabmeat, cream cheese, avocado, cucumber — deep fried with house special Yum Yum sauce</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1617196034183-421b4040ed20?w=600&q=75" alt="Volcano Roll" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Volcano Roll</span><span class="dish-price">$18</span></div><div class="dish-desc">Crabmeat, avocado, cucumber with baked spicy seafood, masago, dynamite sauce</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1559410545-0bdcd187e0a6?w=600&q=75" alt="Lobster Tempura Roll" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Lobster Tempura Roll</span><span class="dish-price">$20</span></div><div class="dish-desc">Lobster tempura, kani, asparagus, avocado with eel sauce</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1617196034082-bef4f1a4b3e8?w=600&q=75" alt="Hamachi Twist Roll" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Hamachi Twist Roll</span><span class="dish-price">$18</span></div><div class="dish-desc">Spicy crab, cucumber, asparagus inside; yellowtail, lime with ponzu sauce on top</div></div></div>
+  </div>
+
+  <!-- CHEF'S ROLLS -->
+  <div class="menu-pane" id="pane-chef">
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=600&q=75" alt="Playboy on Fire" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Playboy on Fire ✶</span><span class="dish-price">$20</span></div><div class="dish-desc">Spicy tuna roll with salmon, spicy mayo, eel sauce</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1617196034183-421b4040ed20?w=600&q=75" alt="Incredible Hulk Roll" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Incredible Hulk Roll</span><span class="dish-price">$22</span></div><div class="dish-desc">Shrimp tempura, asparagus, blue crab inside; spicy tuna, avocado, creamy ponzu on top (10 pcs)</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=600&q=75" alt="Sumo Roll" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Sumo Roll ✶</span><span class="dish-price">$24</span></div><div class="dish-desc">Lump crab, spicy tuna, avocado, cucumber with tuna, salmon, eel, spicy mayo (10 pcs)</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1617196034082-bef4f1a4b3e8?w=600&q=75" alt="King Kamehameha Roll" loading="lazy"><div class="dish-body"><div class="dish-name"><span>King Kamehameha Roll</span><span class="dish-price">$24</span></div><div class="dish-desc">Tempura lobster, kani, cream cheese, masago with tuna, salmon, scallion, eel sauce (10 pcs)</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1617196034183-421b4040ed20?w=600&q=75" alt="Ocean's Three" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Ocean's Three ✶</span><span class="dish-price">$20</span></div><div class="dish-desc">Tuna, salmon, escolar, tamago, avocado, scallion with masago (10 pcs)</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=600&q=75" alt="Snow White Roll" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Snow White Roll ✶</span><span class="dish-price">$20</span></div><div class="dish-desc">Spicy tuna, shrimp tempura, cucumber, avocado inside; crab salad on top (10 pcs)</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1617196034082-bef4f1a4b3e8?w=600&q=75" alt="Lobster Po-Boy" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Lobster Po-Boy</span><span class="dish-price">$24</span></div><div class="dish-desc">Crab meat, cucumber, avocado, cream cheese inside; cooked lobster claw meat, masago on top</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=600&q=75" alt="Wicked Tuna" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Wicked Tuna ✶</span><span class="dish-price">$24</span></div><div class="dish-desc">Spicy tuna, cucumber inside; blue fin tuna mixed with spicy mayo, masago and eel sauce on top</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1559410545-0bdcd187e0a6?w=600&q=75" alt="Golden Tiger Roll" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Golden Tiger Roll (Deep Fried)</span><span class="dish-price">$18</span></div><div class="dish-desc">Shrimp tempura, avocado, cream cheese — deep fried, topped with spicy crab, tempura flake</div></div></div>
+  </div>
+
+  <!-- SUSHI & SASHIMI -->
+  <div class="menu-pane" id="pane-sushi">
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=600&q=75" alt="Sushi Dinner" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Sushi Dinner ✶</span><span class="dish-price">$28</span></div><div class="dish-desc">7 pcs nigiri and California roll</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1617196034099-15f84a4ba2cc?w=600&q=75" alt="Sashimi Dinner" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Sashimi Dinner ✶</span><span class="dish-price">$35</span></div><div class="dish-desc">15 pcs sashimi</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=600&q=75" alt="Sushi Dinner Deluxe" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Sushi Dinner Deluxe ✶</span><span class="dish-price">$36</span></div><div class="dish-desc">12 pcs nigiri and California roll</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1617196034099-15f84a4ba2cc?w=600&q=75" alt="Sushi Sashimi Special" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Sushi Sashimi Special ✶</span><span class="dish-price">$36</span></div><div class="dish-desc">7 pcs sashimi, 5 pcs nigiri and California roll</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1617196034082-bef4f1a4b3e8?w=600&q=75" alt="Salmon Lover" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Salmon Lover ✶</span><span class="dish-price">$30</span></div><div class="dish-desc">3 pcs salmon sashimi, 5 pcs salmon nigiri and salmon roll</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=600&q=75" alt="Tuna Lover" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Tuna Lover ✶</span><span class="dish-price">$30</span></div><div class="dish-desc">3 pcs tuna sashimi, 5 pcs tuna nigiri and tuna roll</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=600&q=75" alt="Pacific Rim Combo" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Pacific Rim Combo for 2 ✶</span><span class="dish-price">$75</span></div><div class="dish-desc">15 pcs sashimi, 10 pcs nigiri, California roll & rainbow roll. Served with 2 miso soups & 2 ginger salads</div></div></div>
+    <div class="dish"><img class="dish-img" src="https://images.unsplash.com/photo-1617196034099-15f84a4ba2cc?w=600&q=75" alt="Chirashi Don" loading="lazy"><div class="dish-body"><div class="dish-name"><span>Chirashi Don ✶</span><span class="dish-price">$35</span></div><div class="dish-desc">Assorted sashimi on sushi rice</div></div></div>
+  </div>
+
+  <p style="margin-top:2rem;font-size:.72rem;color:var(--dim);text-align:center;" class="reveal">✶ = Contains raw fish. Consuming raw or undercooked meats may increase your risk of foodborne illness.</p>
+</section>
+
+<!-- HAPPY HOUR -->
+<section class="happy" id="happyhour">
+  <div class="happy-block reveal">
+    <img class="happy-bg" src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=800&q=75" alt="cocktails" loading="lazy">
+    <div class="happy-content">
+      <span class="sec-label">Daily Special</span>
+      <h3>Happy Hour</h3>
+      <p>Unwind after work with our legendary Happy Hour. Signature cocktails, premium sake, and bar bites — all at special prices.</p>
+      <ul>
+        <li>$2 off all cocktails & draft beer</li>
+        <li>Half-price select appetizers</li>
+        <li>Discounted sake selections</li>
+        <li>Bar menu available all night</li>
+      </ul>
+      <div class="hh-time">Mon – Fri &nbsp;·&nbsp; 4:30 PM – 6:00 PM</div>
+    </div>
+  </div>
+  <div class="happy-block reveal d1">
+    <img class="happy-bg" src="https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=800&q=75" alt="sake and cocktails" loading="lazy">
+    <div class="happy-content">
+      <span class="sec-label">Full Bar</span>
+      <h3>Drinks & Cocktails</h3>
+      <p>Our full bar features an extensive wine list, premium sake, signature cocktails, and a rotating seasonal drink menu.</p>
+      <ul>
+        <li>Signature craft cocktails</li>
+        <li>Premium & sparkling sake</li>
+        <li>Extensive wine list</li>
+        <li>Local & imported draft beers</li>
+      </ul>
+      <div class="hh-time">Full Bar Open Daily</div>
+    </div>
+  </div>
+</section>
+
+<!-- EVENTS -->
+<section class="sec events" id="events">
+  <div class="events-content reveal">
+    <span class="sec-label">Private Dining</span>
+    <h2 class="sec-title">Host your next <em>event with us</em></h2>
+    <div class="sec-rule"></div>
+    <p>Pacific Rim Bistro is the perfect venue for any occasion — from intimate birthday celebrations to large corporate dinners. Our dedicated team ensures every detail is taken care of.</p>
+    <p>We've successfully hosted groups from 10 to 25+ guests, keeping the drinks flowing and food moving. Call us to discuss your event needs.</p>
+    <a href="tel:+14048930018" class="btn-primary" style="margin-top:1.5rem;display:inline-block;">Call to Book an Event</a>
+  </div>
+  <div class="reveal d1">
+    <img class="events-img" src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=800&q=75" alt="Private dining event" loading="lazy">
+    <div class="events-cards" style="margin-top:1px;">
+      <div class="ecard"><div class="ecard-icon">🎂</div><div><strong>Birthdays & Anniversaries</strong><span>Celebrate in style with custom menus</span></div></div>
+      <div class="ecard"><div class="ecard-icon">💼</div><div><strong>Corporate Dinners</strong><span>Impress clients in our private dining area</span></div></div>
+      <div class="ecard"><div class="ecard-icon">💍</div><div><strong>Bridal Showers</strong><span>Elegant settings for your special celebration</span></div></div>
+      <div class="ecard"><div class="ecard-icon">🍱</div><div><strong>Catering</strong><span>Off-site catering for your Atlanta events</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- INFO -->
+<div class="info-grid" id="info">
+  <div class="info-block reveal">
+    <span class="sec-label">Hours</span>
+    <h3>We're Open</h3>
+    <ul class="hours-list">
+      <li class="hl"><span>Lunch (Mon–Fri)</span><span>11:30 AM – 2:30 PM</span></li>
+      <li class="hl"><span>Dinner (Mon–Sun)</span><span>5:00 PM – Close</span></li>
+      <li><span>Happy Hour</span><span>Mon–Fri 4:30–6:00 PM</span></li>
+    </ul>
+  </div>
+  <div class="info-block reveal d1">
+    <span class="sec-label">Find Us</span>
+    <h3>Location</h3>
+    <div class="contact-list">
+      <div class="citem"><strong>Address</strong><p>303 Peachtree Center Ave NE<br>Atlanta, GA 30303</p></div>
+      <div class="citem"><strong>Nearest MARTA</strong><p>Peachtree Center Station<br>Short walk from station</p></div>
+      <div class="citem"><strong>Parking</strong><p>SunTrust Parking Lot<br>2-hr validation (lunch) · 3-hr (dinner)</p></div>
+    </div>
+    <iframe class="map-embed" src="https://maps.google.com/maps?q=303+Peachtree+Center+Ave+NE+Atlanta+GA+30303&output=embed" allowfullscreen loading="lazy" title="Pacific Rim Bistro map"></iframe>
+  </div>
+  <div class="info-block reveal d2">
+    <span class="sec-label">Contact</span>
+    <h3>Get in Touch</h3>
+    <div class="contact-list">
+      <div class="citem"><strong>Phone</strong><a href="tel:+14048930018">(404) 893-0018</a></div>
+      <div class="citem"><strong>Alt. Phone</strong><a href="tel:+16789522410">(678) 952-2410</a></div>
+      <div class="citem"><strong>Email</strong><a href="mailto:pacificrimbistro@gmail.com">pacificrimbistro@gmail.com</a></div>
+      <div class="citem"><strong>Follow Us</strong>
+        <div class="social-row">
+          <a class="soc" href="https://www.instagram.com/pacificrimbistro/" target="_blank">IG</a>
+          <a class="soc" href="https://www.facebook.com/PacificRimBistro/" target="_blank">FB</a>
+          <a class="soc" href="https://www.twitter.com/BistroRim" target="_blank">TW</a>
+          <a class="soc" href="https://www.yelp.com/biz/pacific-rim-bistro-atlanta-2" target="_blank">YP</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<section class="cta-banner" id="reserve">
+  <img class="cta-bg" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600&q=75" alt="restaurant ambience" loading="lazy">
+  <div class="cta-overlay"></div>
+  <div class="cta-content">
+    <h2>Reserve Your <em>Table</em></h2>
+    <p>Join us for lunch, dinner, or a special occasion.<br>Walk-ins welcome — reservations recommended for groups.</p>
+    <a href="https://tmt.spotapps.co/reservations?spot_id=67047" target="_blank" class="btn-primary">Book Online</a>
+    <p class="cta-note">or call us at (404) 893-0018</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="f-brand">
+      <a class="nav-logo" href="#"><span>Pacific Rim Bistro</span><span>Downtown Atlanta</span></a>
+      <p>Pan-Asian cuisine, the freshest sushi, and signature cocktails in the heart of Downtown Atlanta.</p>
+      <p style="margin-top:.5rem;font-size:.75rem;color:rgba(210,170,90,.4);">303 Peachtree Center Ave NE · Atlanta, GA 30303</p>
+    </div>
+    <div class="f-col">
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#menu">Food Menu</a></li>
+        <li><a href="#happyhour">Happy Hour</a></li>
+        <li><a href="#events">Private Events</a></li>
+        <li><a href="#info">Hours & Location</a></li>
+      </ul>
+    </div>
+    <div class="f-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+14048930018">(404) 893-0018</a></li>
+        <li><a href="mailto:pacificrimbistro@gmail.com">pacificrimbistro@gmail.com</a></li>
+        <li><a href="https://tmt.spotapps.co/reservations?spot_id=67047" target="_blank">Make a Reservation</a></li>
+        <li><a href="https://tmt.spotapps.co/ordering-menu?spot_id=67047" target="_blank">Order Online</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Pacific Rim Bistro. All rights reserved.</span>
+    <span>303 Peachtree Center Ave NE, Atlanta, GA 30303</span>
+  </div>
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('stuck', scrollY > 60));
+function openMobile(){ document.getElementById('mobileMenu').classList.add('open'); }
+function closeMobile(){ document.getElementById('mobileMenu').classList.remove('open'); }
+function showTab(id, btn){
+  document.querySelectorAll('.mtab').forEach(b => b.classList.remove('on'));
+  document.querySelectorAll('.menu-pane').forEach(p => p.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('pane-' + id).classList.add('on');
+}
+const io = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => { if(e.isIntersecting){ setTimeout(() => e.target.classList.add('vis'), i * 80); io.unobserve(e.target); } });
+}, { threshold: .07 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
